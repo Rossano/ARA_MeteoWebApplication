@@ -1,0 +1,52 @@
+﻿@model MeteoWebApplication.Models.DailyData
+
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "DailyDataGrid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DailyDataGrid</h2>
+Questa è per la grid dei valori meteo:
+
+La data è @Html.DisplayFor(model => model._date)
+La stazione è @Html.DisplayFor(model => model._station)
+L'azione è @Html.DisplayFor(model => model.actionSelected)
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach(System.Data.DataColumn col in Model._grid.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(System.Data.DataRow row in Model._grid.Rows)
+                {
+                    <tr>
+                        @foreach(var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>  
+        
+    </div>
+    <div>
+        @{
+            var base64 = Convert.ToBase64String(Model.ByteArray);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        }
+
+        <img src="@imgSrc" />
+     
+    </div>
+</div>

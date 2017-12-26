@@ -1,0 +1,58 @@
+﻿@*
+@model MeteoWebApplication.Models.DailyData
+*@
+
+@using MeteoWebApplication.Models
+@model DailyData
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Immettere Data e Stazione Meteo</h2>
+
+@using (Html.BeginForm("PageChosen", "DailyData", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Scegli: </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model._path)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model._date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._station, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._station, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model._station, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @*<fieldset>
+                Visualizza
+                @Html.DropDownList("_userAction");
+            </fieldset>*@
+            @Html.DropDownList("Cosa vuoi visualizzare: ", new SelectList(Enum.GetValues(typeof(user_display_selection))), "Scegli: ", new { @class = "form-control" });
+        </div>
+
+        <p>
+            <input type="submit" value="Invia" />
+        </p>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
