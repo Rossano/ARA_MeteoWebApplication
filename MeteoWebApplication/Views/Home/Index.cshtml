@@ -1,31 +1,87 @@
-﻿@{
+﻿@using MeteoWebApplication.Models
+
+@{
     ViewBag.Title = "Home Page";
 }
 
+@model PageSelect
+
+
 <div class="jumbotron">
     <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p class="lead">Questa è un sito web che permette la visualizzazione per giorno dei dati meteo delle singole stazioni .</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Leggi di più&raquo;</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Introduzione</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            I dati meteo sono raccolti giornalmente dalle singole stazioni, e sono memorizzati sul server. Questa applicazione web permette di accerere ai dati giornalieri di ogni singola stazione meteo ed elaborarli.
         </p>
+        <div>
+            @*
+            @{
+                var listItems = new List<SelectListItem>
+                {
+                    new SelectListItem{Text="Griglia Dati Giornalieri", Value="0"},
+                    new SelectListItem{Text="Grafici Giornalieri", Value="1"}
+                };
+            }
+            @Html.DropDownList("SelectPage", new SelectList(listItems), new { onchange = "getAllData()" })
+            *@
+        </div>
+        @using (Html.BeginForm("SelectPage", "Home", FormMethod.Post, new { role = "form" }))
+    {
+        @*<div class="form-group"> *@
+        @*
+        @Html.DropDownList("PageSelect", new SelectList(Enum.GetValues(typeof(PageSelectEnum))), "Scegli Cosa visualizzare", new { @class = "form-control" });
+        *@
+        @* @Html.DropDownListFor(m=>m.PageModelOptions.First()._pageID, new SelectList(Model.PageModelOptions, "_pageID", "_value")) *@
+        @* <p>
+                <input type="submit" value="Vai!" />
+            </p>
+            </div>
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Scegli Pagina</legend>
+        <div class="editor-field">
+            @Html.DropDownList("_pages", ViewData["pages"] as List<SelectListItem>)
+        </div>
+        <div class="form-group">
+            Html.LabelFor(m => m._page)
+            @Html.DropDownListFor(m => m._page, Model._pages, "Scegli Pagina: " , new { @class = "form-control" })
+        </div>
+        <p>
+            <input type="submit" class="btn btn-primary" value="VAI !" />
+        </p>
+        *@
+
+        @*</fieldset>*@
+
+            <table>
+                <tr>
+                    <td>
+                        @*@<input type="button" name="btnDailyGrid" value="Griglia Dati Giornalieri" />*@
+                        <p><a class="btn btn-default" href="/DailyData">Griglia Dati Giornalieri</a></p>
+                    </td>
+                    <td>
+                        @*@<input type="button" name="btnDailyGraph" value="Grafici Dati GIornalieri" />*@
+                        <p><a class="btn btn-default" href="/DailyGraph">Grafici Dati Giornalieri</a></p>
+                    </td>
+                </tr>
+            </table>
+}
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <h2>Uso dell'applicazione</h2>
+        <p>Scegliere dalla lista di sotto cosa visualizzare e quindi selezionare submit.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p>Magari qui si mette qualcosa su chi ci ospita :o).</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>

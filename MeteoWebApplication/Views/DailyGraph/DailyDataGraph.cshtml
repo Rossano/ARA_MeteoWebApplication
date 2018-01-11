@@ -1,0 +1,22 @@
+﻿@model MeteoWebApplication.Models.DailyGraph
+
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "DailyDataGraph";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DailyDataGraph</h2>
+Questa è per i grafici dei valori meteo:
+
+La data è @Html.DisplayFor(model => model._date)
+La stazione è @Html.DisplayFor(model => model._station)
+
+<div class="panel panel-default">
+    <div>
+        <img src="@ViewBag.ImageData" alt="" />
+
+    </div>
+</div>

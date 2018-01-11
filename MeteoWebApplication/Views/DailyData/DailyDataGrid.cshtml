@@ -41,12 +41,7 @@ L'azione è @Html.DisplayFor(model => model.actionSelected)
         
     </div>
     <div>
-        @{
-            var base64 = Convert.ToBase64String(Model.ByteArray);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-        }
-
-        <img src="@imgSrc" />
+        <img src="@ViewBag.ImageData" alt="" />
      
     </div>
 </div>

@@ -1,0 +1,57 @@
+﻿@*@model MeteoWebApplication.Models.DailyGraph*@
+
+@using MeteoWebApplication.Models
+
+@model DailyGraph
+
+@using (Html.BeginForm("displayPage","DailyGraph",FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>DailyGraph</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @**<div class="form-group">
+            @Html.LabelFor(model => model._path, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._path, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model._path, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._station, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._station, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model._station, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model._date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @**<div class="form-group">
+            @Html.LabelFor(model => model.graphPath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.graphPath, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.graphPath, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Vai" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

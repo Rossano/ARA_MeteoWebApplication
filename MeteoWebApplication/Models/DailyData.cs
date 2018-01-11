@@ -20,8 +20,10 @@ namespace MeteoWebApplication.Models
         public int _station { get; set; }
 
         [Required]
-        [Display(Name = "_date")]
-        public string _date { get; set; }
+ //       [Display(Name = "_date")]
+ //       public string _date { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime _date { get; set; }
 
         [Required]
         [Display(Name ="_userAction")]
@@ -33,6 +35,7 @@ namespace MeteoWebApplication.Models
         public DataTable _grid { get; set; }
 
         public Image _graph { get; set; }
+        //public byte[] _graph { get; set; }
         public string graphPath { get; set; }
     }
 

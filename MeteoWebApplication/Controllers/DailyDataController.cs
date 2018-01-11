@@ -24,12 +24,12 @@ namespace MeteoWebApplication.Controllers
             //model._userAction = GetSelectListItems(states);
 
             //return View(model);
-            List<SelectListItem> items = new List<SelectListItem>();
+            //List<SelectListItem> items = new List<SelectListItem>();
 
-            items.Add(new SelectListItem { Text = "Griglia Dati Giornalieri", Value = "0" });
-            items.Add(new SelectListItem { Text = "Grafici Dati Giornalieri", Value = "1" });
+            //items.Add(new SelectListItem { Text = "Griglia Dati Giornalieri", Value = "0" });
+            //items.Add(new SelectListItem { Text = "Grafici Dati Giornalieri", Value = "1" });
 
-            ViewBag._userAction = items;
+            //ViewBag._userAction = items;
 
             return View();
         }
@@ -50,12 +50,12 @@ namespace MeteoWebApplication.Controllers
             // }
             // else return View();
 
-            List<SelectListItem> items = new List<SelectListItem>();
+            //List<SelectListItem> items = new List<SelectListItem>();
 
-            items.Add(new SelectListItem { Text = "Griglia Dati Giornalieri", Value = "0" });
-            items.Add(new SelectListItem { Text = "Grafici Dati Giornalieri", Value = "1" });
+            //items.Add(new SelectListItem { Text = "Griglia Dati Giornalieri", Value = "0" });
+            //items.Add(new SelectListItem { Text = "Grafici Dati Giornalieri", Value = "1" });
 
-            ViewBag._userAction = items;
+            //ViewBag._userAction = items;
 
             return View();
         }
@@ -69,7 +69,7 @@ namespace MeteoWebApplication.Controllers
                     try
                     {
                         model._path = "C:\\Test";
-                        DateTime date = DateTime.ParseExact(model._date, "yyyyMMdd", null);
+                        DateTime date = DateTime.ParseExact(FormAspDateString(model._date), "yyyyMMdd", null);
 
 
                         string pf = AspPath.ComposePath(model._path, AspUtility.ComposeMeteoDirectoryPath(AspDirectoryDeepType.Day, model._station, date));
@@ -131,9 +131,11 @@ namespace MeteoWebApplication.Controllers
                             if(graph.Create(info, date))
                             {
                                 model._graph = graph.GetImage;
-                               // byte[] foo = File.ReadAllBytes(graph.GetImage);
+                                //byte[] foo = File.ReadAllBytes(graph.GetImage);
                                 //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
-
+                                model.graphPath = GetImg(model._graph);
+                                //Passing image data in viewbag to view  
+                                ViewBag.ImageData = model.graphPath;
                             }
                         }
                         return View("DailyDataGrid", model);
@@ -147,12 +149,52 @@ namespace MeteoWebApplication.Controllers
             return View();
         }
 
+        public string GetImg(System.Drawing.Image img)
+        {
+            using (var streak = new System.IO.MemoryStream())
+            {
+                img.Save(streak, System.Drawing.Imaging.ImageFormat.Gif);
+                byte[] bytes = streak.ToArray();
+                //string res = Convert.ToBase64String(bytes, 0, bytes.Length);
+                //return res;
+                string imreBase64Data = Convert.ToBase64String(bytes);
+                string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+                return imgDataURL;             
+            }
+        }
+
+        private string FormAspDateString(DateTime date)
+        {
+            string foo;
+            string month;
+            string day;
+            foo = string.Format("{0}", date.Year);
+            if (date.Month < 10)
+            {
+                month = string.Format("0{0}", date.Month);
+            }
+            else
+            {
+                month = string.Format("{0}", date.Month);
+            }
+            if (date.Day < 10)
+            {
+                day = string.Format("0{0}", date.Day);
+            }
+            else
+            {
+                day = string.Format("{0}", date.Day);
+            }
+            
+            return foo + month + day;  
+        }
+
         // GET:
-        public ActionResult DailyDataGrid(DailyData model)
+  /*      public ActionResult DailyDataGrid(DailyData model)
         {
             try
             {
-                DateTime date=DateTime.ParseExact(model._date, "yyyyMMdd", null);
+                DateTime date=DateTime.ParseExact(FormAspDateString(model._date), "yyyyMMdd", null);
 
 
                 string pf = AspPath.ComposePath(model._path, AspUtility.ComposeMeteoDirectoryPath(AspDirectoryDeepType.Day, model._station, date));
@@ -169,8 +211,8 @@ namespace MeteoWebApplication.Controllers
                 return Redirect("Error.cshtml");
             }
             //return RedirectToAction("Index");
-        }
-
+        }*/
+/*
         private IEnumerable<string> GetAllStates()
         {
             return new List<string>
@@ -194,9 +236,9 @@ namespace MeteoWebApplication.Controllers
             }
             return selectList;
         }
-        
+        */
     }
-
+/*
     public class AspPeriodicDataUtility
     {
         public static AspMeteoParametersType[] SequenceSnapshotMeasureData()
@@ -544,4 +586,5 @@ namespace MeteoWebApplication.Controllers
         }
         //---
     }
+    */
 }
