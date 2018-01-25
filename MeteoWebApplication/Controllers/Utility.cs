@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using Asp.Meteo.Viewer;
+using System.Text;
 
 namespace MeteoWebApplication.Controllers
 {
@@ -85,6 +86,16 @@ namespace MeteoWebApplication.Controllers
                 fdt.Rows.Add(nr);
             }
 
+            fdt.Columns["measuretype"].ColumnName = "Misura";
+            fdt.Columns["um"].ColumnName = "Unità Misura";
+            fdt.Columns["max"].ColumnName = "Massimo";
+            fdt.Columns["hourmax"].ColumnName = "Massimo Ora";
+            fdt.Columns["min"].ColumnName = "Minimo";
+            fdt.Columns["hourmin"].ColumnName = "Minimo Ora";
+            fdt.Columns["mean"].ColumnName = "Media";
+            fdt.Columns["Escursion"].ColumnName = "Escursione";
+            fdt.Columns["nmisure"].ColumnName = "# Misure";
+
             return fdt;
         }
         //---
@@ -133,6 +144,22 @@ namespace MeteoWebApplication.Controllers
                 fdt.Rows.Add(dtr);
             }
 
+            fdt.Columns["hfrom"].ColumnName = "Da";
+            fdt.Columns["hto"].ColumnName = "A";
+            fdt.Columns["temp"].ColumnName = "Temperatura";
+            fdt.Columns["umid"].ColumnName = "Umidità";
+            fdt.Columns["press"].ColumnName = "Pressione";
+            fdt.Columns["dewpoint"].ColumnName = "Punto Rugiada";
+            fdt.Columns["windmax"].ColumnName = "Vento Max";
+            fdt.Columns["wind"].ColumnName = "Vento";
+            fdt.Columns["windangle"].ColumnName = "Angolo Vento";
+            fdt.Columns["heat"].ColumnName = "Calore";
+            fdt.Columns["thom"].ColumnName = "Thom";
+            fdt.Columns["windchill"].ColumnName = "Windchill";
+            fdt.Columns["uv"].ColumnName = "UV";
+            fdt.Columns["rad"].ColumnName = "Rad";
+            fdt.Columns["ev"].ColumnName = "EV";
+            fdt.Columns["rain"].ColumnName = "Pioggia";
             return fdt;
         }
         //---
@@ -177,6 +204,15 @@ namespace MeteoWebApplication.Controllers
             tr["NMeasure"] = thom.NMeasure < 0 ? AspUtility.BadDataPresentation : thom.NMeasure.ToString();
             fdt.Rows.Add(tr);
 
+            fdt.Columns["Measure"].ColumnName = "Misura";
+            fdt.Columns["um"].ColumnName = "Unità Misura";
+            fdt.Columns["Max"].ColumnName = "Massimo";
+            fdt.Columns["HMax"].ColumnName = "Ora Massimo";
+            fdt.Columns["From"].ColumnName = "Da";
+            fdt.Columns["To"].ColumnName = "A";
+            fdt.Columns["Mean"].ColumnName = "Media";
+            fdt.Columns["Duration"].ColumnName = "Durata";
+            fdt.Columns["NMeasure"].ColumnName = "# Misure";
             return fdt;
         }
         //---
@@ -353,5 +389,17 @@ namespace MeteoWebApplication.Controllers
                 return string.Empty;
         }
         //---
+    }
+
+    public static class MessageBox
+    {
+        public static void Show(this System.Web.UI.Page Page, String Message)
+        {
+            Page.ClientScript.RegisterStartupScript(
+               Page.GetType(),
+               "MessageBox",
+               "<script language='javascript'>alert('" + Message + "');</script>"
+            );
+        }
     }
 }

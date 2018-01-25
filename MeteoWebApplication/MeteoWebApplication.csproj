@@ -228,6 +228,7 @@
     <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\DailyGraph\Index.cshtml" />
     <Content Include="Views\DailyGraph\DailyDataGraph.cshtml" />
+    <Content Include="Views\DailyGraph\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

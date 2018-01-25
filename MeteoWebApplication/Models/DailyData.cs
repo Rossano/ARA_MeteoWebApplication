@@ -30,9 +30,20 @@ namespace MeteoWebApplication.Models
         public IEnumerable<SelectListItem> _userAction { get; set; }
 
         //public string actionSelected { get; set; }
-        public user_display_selection actionSelected;
+//        public user_display_selection actionSelected;
 
-        public DataTable _grid { get; set; }
+        public DataTable _gridDaily { get; set; }
+        public DataTable _gridHourlyAgg { get; set; }
+        public DataTable _gridPredawn { get; set; }
+        public DataTable _gridDailyMorning { get; set; }
+        public DataTable _gridDailyNoon { get; set; }
+        public DataTable _gridDailyEvening { get; set; }
+        public DataTable _gridDailyRain { get; set; }
+        public DataTable _gridRainPredawn { get; set; }
+        public DataTable _gridRainMorning { get; set; }
+        public DataTable _gridRainNoon { get; set; }
+        public DataTable _gridRainEvening { get; set; }
+        public DataTable _gridHeat { get; set; }
 
         public Image _graph { get; set; }
         //public byte[] _graph { get; set; }

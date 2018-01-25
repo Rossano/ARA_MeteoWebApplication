@@ -23,7 +23,9 @@ namespace MeteoWebApplication.Controllers
         {
             try
             {
-                model._path = "C:\\Test";
+                //model._path = "C:\\Test";
+                model._path = System.Configuration.ConfigurationManager.AppSettings["dataRootFolder"];
+                
                 DateTime date = DateTime.ParseExact(FormAspDateString(model._date), "yyyyMMdd", null);
 
 
@@ -73,18 +75,205 @@ namespace MeteoWebApplication.Controllers
 
                     if (graph.Create(info, date))
                     {
-                        model._graph = graph.GetImage;
+                        model._graphTemp = graph.GetImage;
                         //byte[] foo = File.ReadAllBytes(graph.GetImage);
                         //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
-                        model.graphPath = GetImg(model._graph);
+                        model.graphPath1 = GetImg(model._graphTemp);
                         //Passing image data in viewbag to view  
-                        ViewBag.ImageData = model.graphPath;
+                        ViewBag.ImageData1 = model.graphPath1;
+                    }
+
+                }
+                else
+                {
+                    throw new Exception("Dati giornalieri della stazione specificati inesistenti");
+                }
+
+                // temperatura, temp max e temp min
+                AspMeteoParametersType[] p1 = new AspMeteoParametersType[3];
+                p1[0] = AspMeteoParametersType.TemperatureMin;
+                p1[1] = AspMeteoParametersType.TemperaturaMax;
+                p1[2] = AspMeteoParametersType.Temperature;
+                AspMeteoParametersDataGroup dp1 = rpars.Read(p1, date);
+                if (dp1.Isvalid)
+                {
+                    AspGraphInfoType info;
+                    info.colors = new System.Drawing.Color[3];
+                    info.parameters = dp1;
+                    info.tollerance = 15;
+                    info.type = AspTypeGrapEnum.Line;
+
+                    AspDailyGraph graph = new AspDailyGraph(600, 480);
+                    graph.AxisXLabel = string.Format("Orario (data: {0:dd/MM/yyy}", date);
+                    graph.AxisYLabel = "Gradi Centigradi";
+                    graph.PointSize = 5;
+                    graph.Title = "Temperatura (Arancione, minima blu, massima rossa)";
+
+                    if (graph.Create(info, date))
+                    {
+                        model._graphTempMaxMin = graph.GetImage;
+                        //byte[] foo = File.ReadAllBytes(graph.GetImage);
+                        //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
+                        model.graphPath2 = GetImg(model._graphTempMaxMin);
+                        //Passing image data in viewbag to view  
+                        ViewBag.ImageData2 = model.graphPath2;
                     }
                 }
+
+                // temperatura e dewpoint
+                AspMeteoParametersType[] p2 = new AspMeteoParametersType[2];
+                p2[0] = AspMeteoParametersType.DewPoint;
+                p2[1] = AspMeteoParametersType.Temperature;
+                AspMeteoParametersDataGroup dp2 = rpars.Read(p2, date);
+                if (dp2.Isvalid)
+                {
+                    AspGraphInfoType info;
+                    info.colors = new System.Drawing.Color[2];
+                    info.parameters = dp2;
+                    info.tollerance = 15;
+                    info.type = AspTypeGrapEnum.Line;
+
+                    AspDailyGraph graph = new AspDailyGraph(600, 480);
+                    graph.AxisXLabel = string.Format("Orario (data: {0:dd/MM/yyy}", date);
+                    graph.AxisYLabel = "Gradi Centigradi";
+                    graph.PointSize = 5;
+                    graph.Title = "Temperatura (arancione) e Dewpoint (blu)";
+
+                    if (graph.Create(info, date))
+                    {
+                        model._graphTempDewP = graph.GetImage;
+                        //byte[] foo = File.ReadAllBytes(graph.GetImage);
+                        //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
+                        model.graphPath3 = GetImg(model._graphTempDewP);
+                        //Passing image data in viewbag to view  
+                        ViewBag.ImageData3 = model.graphPath3;
+                    }
+                }
+
+                // temperatura e heat index
+                AspMeteoParametersType[] p3 = new AspMeteoParametersType[2];
+                p3[0] = AspMeteoParametersType.HeathIndex;
+                p3[1] = AspMeteoParametersType.Temperature;
+                AspMeteoParametersDataGroup dp3 = rpars.Read(p3, date);
+                if (dp3.Isvalid)
+                {
+                    AspGraphInfoType info;
+                    info.colors = new System.Drawing.Color[2];
+                    info.parameters = dp3;
+                    info.tollerance = 15;
+                    info.type = AspTypeGrapEnum.Line;
+
+                    AspDailyGraph graph = new AspDailyGraph(600, 480);
+                    graph.AxisXLabel = string.Format("Orario (data: {0:dd/MM/yyy}", date);
+                    graph.AxisYLabel = "Gradi Centigradi";
+                    graph.PointSize = 5;
+                    graph.Title = "Temperatura (arancione) e Heat Index (blu)";
+
+                    if (graph.Create(info, date))
+                    {
+                        model._graphTempHeat = graph.GetImage;
+                        //byte[] foo = File.ReadAllBytes(graph.GetImage);
+                        //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
+                        model.graphPath4 = GetImg(model._graphTempHeat);
+                        //Passing image data in viewbag to view  
+                        ViewBag.ImageData4 = model.graphPath4;
+                    }
+                }
+
+                // temperatura e Wind Chill
+                AspMeteoParametersType[] p5 = new AspMeteoParametersType[2];
+                p5[0] = AspMeteoParametersType.WindChill;
+                p5[1] = AspMeteoParametersType.Temperature;
+                AspMeteoParametersDataGroup dp5 = rpars.Read(p5, date);
+                if (dp5.Isvalid)
+                {
+                    AspGraphInfoType info;
+                    info.colors = new System.Drawing.Color[2];
+                    info.parameters = dp5;
+                    info.tollerance = 15;
+                    info.type = AspTypeGrapEnum.Line;
+
+                    AspDailyGraph graph = new AspDailyGraph(600, 480);
+                    graph.AxisXLabel = string.Format("Orario (data: {0:dd/MM/yyy}", date);
+                    graph.AxisYLabel = "Gradi Centigradi";
+                    graph.PointSize = 5;
+                    graph.Title = "Temperatura (arancione) e Wind Chill (blu)";
+
+                    if (graph.Create(info, date))
+                    {
+                        model._graphTempWindChill = graph.GetImage;
+                        //byte[] foo = File.ReadAllBytes(graph.GetImage);
+                        //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
+                        model.graphPath6 = GetImg(model._graphTempWindChill);
+                        //Passing image data in viewbag to view  
+                        ViewBag.ImageData5 = model.graphPath6;
+                    }
+                }
+
+                // Vento  e vento max
+                AspMeteoParametersType[] p4 = new AspMeteoParametersType[2];
+                p4[0] = AspMeteoParametersType.windmax;
+                p4[1] = AspMeteoParametersType.Wind;
+                AspMeteoParametersDataGroup dp4 = rpars.Read(p4, date);
+                if (dp4.Isvalid)
+                {
+                    AspGraphInfoType info;
+                    info.colors = new System.Drawing.Color[2];
+                    info.parameters = dp4;
+                    info.tollerance = 15;
+                    info.type = AspTypeGrapEnum.Line;
+
+                    AspDailyGraph graph = new AspDailyGraph(600, 480);
+                    graph.AxisXLabel = string.Format("Orario (data: {0:dd/MM/yyy}", date);
+                    graph.AxisYLabel = "Velocità in Km/h";
+                    graph.PointSize = 5;
+                    graph.Title = "Vel. vento (arancione) e vel. raffiche (porpora)";
+
+                    if (graph.Create(info, date))
+                    {
+                        model._graphWind = graph.GetImage;
+                        //byte[] foo = File.ReadAllBytes(graph.GetImage);
+                        //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
+                        model.graphPath5 = GetImg(model._graphWind);
+                        //Passing image data in viewbag to view  
+                        ViewBag.ImageData6 = model.graphPath5;
+                    }
+                }
+
+                // pioggia
+                AspMeteoParametersType[] p6 = new AspMeteoParametersType[1];
+                p6[0] = AspMeteoParametersType.Rain;
+                AspMeteoParametersDataGroup dp6 = rpars.Read(p6, date);
+                if (dp6.Isvalid)
+                {
+                    AspGraphInfoType info;
+                    info.colors = new System.Drawing.Color[1];
+                    info.parameters = dp6;
+                    info.tollerance = 15;
+                    info.type = AspTypeGrapEnum.Line;
+
+                    AspDailyGraph graph = new AspDailyGraph(600, 480);
+                    graph.AxisXLabel = string.Format("Orario (data: {0:dd/MM/yyy}", date);
+                    graph.AxisYLabel = "millimetri";
+                    graph.PointSize = 5;
+                    graph.Title = "Pioggia";
+
+                    if (graph.Create(info, date))
+                    {
+                        model._graphRain = graph.GetImage;
+                        //byte[] foo = File.ReadAllBytes(graph.GetImage);
+                        //model.graphPath = "data:image/png;base64," + Convert.ToBase64String(foo);
+                        model.graphPath7 = GetImg(model._graphRain);
+                        //Passing image data in viewbag to view  
+                        ViewBag.ImageData7 = model.graphPath7;
+                    }
+                }
+
                 return View("DailyDataGraph", model);
             }
-            catch
+            catch(Exception ex)
             {
+                ViewBag.Message = string.Format("Hello {0}.\\nCurrent Date and Time: {1}", ex.Message, DateTime.Now.ToString());
                 return View("Error");
             }
         }

@@ -13,35 +13,311 @@ Questa è per la grid dei valori meteo:
 
 La data è @Html.DisplayFor(model => model._date)
 La stazione è @Html.DisplayFor(model => model._station)
-L'azione è @Html.DisplayFor(model => model.actionSelected)
+@*L'azione è @Html.DisplayFor(model => model.actionSelected)*@
 
 <div class="panel panel-default">
     <div class="panel-body">
+        @Html.Label("Sintesi dati giornalieri (Ore 0-24)")
         <table border="1" cellpadding="5">
             <thead>
                 <tr>
-                    @foreach(System.Data.DataColumn col in Model._grid.Columns)
+                    @foreach (System.Data.DataColumn col in Model._gridDaily.Columns)
                     {
                         <th>@col.Caption</th>
                     }
                 </tr>
             </thead>
             <tbody>
-                @foreach(System.Data.DataRow row in Model._grid.Rows)
+                @foreach (System.Data.DataRow row in Model._gridDaily.Rows)
                 {
                     <tr>
-                        @foreach(var cell in row.ItemArray)
+                        @foreach (var cell in row.ItemArray)
                         {
                             <td>@cell.ToString()</td>
                         }
                     </tr>
                 }
             </tbody>
-        </table>  
-        
+        </table>
+    </div>
+    <div class="panel-body">
+        @Html.Label("Sintesi dati orari del giornaliero (Ore 0-24)")
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model._gridHourlyAgg.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model._gridHourlyAgg.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body">
+        @Html.Label("Sintesi dati ore antilucane (Ore 0-6)")
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model._gridPredawn.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model._gridPredawn.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body">
+        @Html.Label("Sintesi dati ore mattutine (Ore 6-12)")
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model._gridDailyMorning.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model._gridDailyMorning.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body">
+        @Html.Label("Sintesi dati ore Pomeridiane (Ore 12-18)")
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model._gridDailyNoon.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model._gridDailyNoon.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body">
+        @Html.Label("Sintesi dati ore serali (Ore 18-24)")
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model._gridDailyEvening.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model._gridDailyEvening.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
     <div>
-        <img src="@ViewBag.ImageData" alt="" />
-     
+        <table>
+            <thead>
+                <tr>
+                    @Html.Label("Sintesi pioggia giornaliera (Ore 0-24)")
+                    <table border="1" cellpadding="5">
+                        <thead>
+                            <tr>
+                                @foreach (System.Data.DataColumn col in Model._gridDailyRain.Columns)
+                                {
+                                    <th>@col.Caption</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (System.Data.DataRow row in Model._gridDailyRain.Rows)
+                            {
+                                <tr>
+                                    @foreach (var cell in row.ItemArray)
+                                    {
+                                        <td>@cell.ToString()</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.Label("Sintesi dati Pioggia antilucana (Ore 0-6)")
+                        <table border="1" cellpadding="5">
+                            <thead>
+                                <tr>
+                                    @foreach (System.Data.DataColumn col in Model._gridRainPredawn.Columns)
+                                    {
+                                        <th>@col.Caption</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in Model._gridRainPredawn.Rows)
+                                {
+                                    <tr>
+                                        @foreach (var cell in row.ItemArray)
+                                        {
+                                            <td>@cell.ToString()</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        @Html.Label("Sintesi dati pioggia mattutina (Ore 6-12)")
+                        <table border="1" cellpadding="5">
+                            <thead>
+                                <tr>
+                                    @foreach (System.Data.DataColumn col in Model._gridRainMorning.Columns)
+                                    {
+                                        <th>@col.Caption</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in Model._gridRainMorning.Rows)
+                                {
+                                    <tr>
+                                        @foreach (var cell in row.ItemArray)
+                                        {
+                                            <td>@cell.ToString()</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Sintesi dati Pioggia ore pomeridiane (Ore 12-18)")
+                        <table border="1" cellpadding="5">
+                            <thead>
+                                <tr>
+                                    @foreach (System.Data.DataColumn col in Model._gridRainNoon.Columns)
+                                    {
+                                        <th>@col.Caption</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in Model._gridRainNoon.Rows)
+                                {
+                                    <tr>
+                                        @foreach (var cell in row.ItemArray)
+                                        {
+                                            <td>@cell.ToString()</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        @Html.Label("Sintesi pioggia ore serali (Ore 18-24)")
+                        <table border="1" cellpadding="5">
+                            <thead>
+                                <tr>
+                                    @foreach (System.Data.DataColumn col in Model._gridRainEvening.Columns)
+                                    {
+                                        <th>@col.Caption</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in Model._gridRainEvening.Rows)
+                                {
+                                    <tr>
+                                        @foreach (var cell in row.ItemArray)
+                                        {
+                                            <td>@cell.ToString()</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
+    <div class="panel-body">
+        @Html.Label("Indici calore giornalieri (Ore 0-24)")
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model._gridHeat.Columns)
+                    {
+                        <th>@col.Caption</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model._gridHeat.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            <td>@cell.ToString()</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*@    <div>
+            <img src="@ViewBag.ImageData" alt="" />
+        </div>*@
 </div>
